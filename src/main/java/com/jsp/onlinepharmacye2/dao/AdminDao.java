@@ -8,10 +8,14 @@ import com.jsp.onlinepharmacye2.repo.AdminRepo;
 
 @Repository
 public class AdminDao {
+//	dao is meant for your database logic 
+//	it will perform crud operation and it will return the data
+	
     @Autowired
     private AdminRepo repo;
-	public void saveAdmin(Admin admin) {
-		repo.save(admin);
+    
+	public Admin saveAdmin(Admin admin) {
+		return repo.save(admin);
 	}
 
 }
