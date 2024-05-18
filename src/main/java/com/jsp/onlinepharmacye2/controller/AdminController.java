@@ -2,8 +2,10 @@ package com.jsp.onlinepharmacye2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jsp.onlinepharmacye2.dao.AdminDao;
@@ -24,5 +26,15 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<AdminDto>> signupAdmin(@RequestBody Admin admin) {
 		return service.signupAdmin(admin);
 	}
+	
+	
+	@GetMapping("/find")
+	public ResponseEntity<ResponseStructure<AdminDto>> fetchAdminById(@RequestParam int id){
+		return service.fetchAdminById(id);
+	}
+	
+	
+	
+	
 	
 }

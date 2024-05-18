@@ -1,5 +1,7 @@
 package com.jsp.onlinepharmacye2.dao;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,16 @@ public class AdminDao {
     
 	public Admin saveAdmin(Admin admin) {
 		return repo.save(admin);
+	}
+
+	public Admin findAdminById(int id) {
+		Optional<Admin> optional=repo.findById(id);
+		
+		if(optional.isPresent()) {
+//			id is present
+			return optional.get();	
+		}
+		return null;
 	}
 
 }
