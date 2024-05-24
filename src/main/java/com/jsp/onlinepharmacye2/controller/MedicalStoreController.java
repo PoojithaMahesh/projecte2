@@ -2,6 +2,7 @@ package com.jsp.onlinepharmacye2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +36,10 @@ public class MedicalStoreController {
 	@GetMapping
 	public ResponseEntity<ResponseStructure<MedicalStoreDto>> findMedicalStore(@RequestParam int storeId){
 		return service.findMedicalStore(storeId);
-		
+	}
+	
+	@DeleteMapping
+	public ResponseEntity<ResponseStructure<MedicalStoreDto>> deleteMedicalStore(@RequestParam int storeId){
+		return service.deleteMedicalStore(storeId);
 	}
 }

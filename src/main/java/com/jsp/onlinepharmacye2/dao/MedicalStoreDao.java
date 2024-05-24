@@ -22,7 +22,14 @@ public class MedicalStoreDao {
 	public MedicalStore updateMedicalStore(int storeId, MedicalStore medicalStore) {
 		Optional<MedicalStore> optional=repo.findById(storeId);
 		if(optional.isPresent()) {
+			MedicalStore dbMedicalStore=optional.get();
 			medicalStore.setStoreId(storeId);
+//			id storename managername phone
+//			address admin=null
+			medicalStore.setAddress(dbMedicalStore.getAddress());
+			medicalStore.setAdmin(dbMedicalStore.getAdmin());
+			
+//			medicalSTore=id storename managername phone address admin
 			return repo.save(medicalStore);
 		}
 		return null;

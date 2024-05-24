@@ -49,6 +49,11 @@ public class MedicalStoreService {
 				medicalStore.setAddress(dbAddress);
 			
 				MedicalStore dbMedicalStore=dao.saveMedicalStore(medicalStore);
+//				extra code added on 24/05/2024 next 2 lines
+				
+				dbAddress.setMedicalStore(medicalStore);
+				addressDao.updateAddress(addressId, dbAddress);
+				
 				MedicalStoreDto dto=new MedicalStoreDto();
 				dto.setStoreId(dbMedicalStore.getStoreId());
 				dto.setStoreName(dbMedicalStore.getStoreName());
