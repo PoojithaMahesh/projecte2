@@ -11,6 +11,7 @@ import com.jsp.onlinepharmacye2.entity.MedicalStore;
 import com.jsp.onlinepharmacye2.entity.Medicine;
 import com.jsp.onlinepharmacye2.exception.MedicalStoreIdNotFoundException;
 import com.jsp.onlinepharmacye2.exception.MedicineIdNotFoundException;
+import com.jsp.onlinepharmacye2.exception.MedicineNameNotFoundException;
 import com.jsp.onlinepharmacye2.util.ResponseStructure;
 
 @Service
@@ -81,5 +82,21 @@ public class MedicineService {
 //			id is present and failed to update the data
 			throw new MedicineIdNotFoundException("Sorry failed to delete the medicine");
 		}
+	}
+
+	public ResponseEntity<ResponseStructure<Medicine>> findMedicine(String medicineName) {
+		Medicine dbMedicine=dao.findMedicineByName(medicineName);
+		if (dbMedicine != null) {
+//			id is present and data updated successfully
+			ResponseStructure<Medicine> structure = new ResponseStructure<Medicine>();
+			structure.setMessage("Medicine fetched successfully");
+			structure.setHttpStatus(HttpStatus.FOUND.value());
+			structure.setData(dbMedicine);
+			return new ResponseEntity<ResponseStructure<Medicine>>(structure, HttpStatus.FOUND);
+		} else {
+//			id is present and failed to update the data
+			throw new MedicineNameNotFoundException("Sorry failed to fetch the medicine");
+		}
+
 	}
 }

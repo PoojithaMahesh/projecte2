@@ -50,4 +50,13 @@ public class MedicineDao {
 		}
 		return null;
 	}
+
+	public Medicine findMedicineByName(String medicineName) {
+		Optional<Medicine> optional=repo.findByName(medicineName);
+		if(optional.isPresent()) {
+//			medicine is present 
+			return optional.get();
+		}
+		return null;
+	}
 }

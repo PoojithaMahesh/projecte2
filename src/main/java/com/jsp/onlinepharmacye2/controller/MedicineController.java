@@ -43,8 +43,10 @@ public class MedicineController {
 		return service.deleteMedicine(medicineId);
 	}
 	
-	
-	
+	@GetMapping("/findbyname")
+	public ResponseEntity<ResponseStructure<Medicine>> findMedicineByName(@RequestParam String medicineName){
+		return service.findMedicine(medicineName);
+	}
 	
 	
 }
