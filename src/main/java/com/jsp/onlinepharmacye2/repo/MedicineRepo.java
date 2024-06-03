@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.jsp.onlinepharmacye2.entity.Medicine;
 
 public interface MedicineRepo extends JpaRepository<Medicine, Integer>{
-    @Query("Select m from Medicine m where m.medicineName")
+    @Query("Select m from Medicine m where m.medicineName=?1")
 	public Optional<Medicine> findByName(String medicineName);
 
 }

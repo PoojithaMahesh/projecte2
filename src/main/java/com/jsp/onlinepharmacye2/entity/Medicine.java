@@ -2,7 +2,10 @@ package com.jsp.onlinepharmacye2.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +27,8 @@ public class Medicine {
 	private int stockQuantity;
 	private String manufacturer;
 	private String description;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private MedicalStore medicalStore;
 	
 	

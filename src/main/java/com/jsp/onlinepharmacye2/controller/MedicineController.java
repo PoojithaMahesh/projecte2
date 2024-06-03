@@ -2,6 +2,7 @@ package com.jsp.onlinepharmacye2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,7 @@ import com.jsp.onlinepharmacye2.util.ResponseStructure;
 public class MedicineController {
 
 	@Autowired
+	
 	private MedicineService service;
 	
 	@PostMapping
@@ -38,7 +40,7 @@ public class MedicineController {
 	}
 	
 	
-	@GetMapping
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<Medicine>> deleteMedicine(@RequestParam int medicineId){
 		return service.deleteMedicine(medicineId);
 	}
