@@ -1,5 +1,6 @@
 package com.jsp.onlinepharmacye2.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,10 @@ import com.jsp.onlinepharmacye2.entity.Bookings;
 import com.jsp.onlinepharmacye2.entity.Customer;
 import com.jsp.onlinepharmacye2.entity.Medicine;
 import com.jsp.onlinepharmacye2.enums.BookingStatus;
+import com.jsp.onlinepharmacye2.exception.BookingAlreadyCancelledException;
+import com.jsp.onlinepharmacye2.exception.BookingAlreadyDeliveredException;
+import com.jsp.onlinepharmacye2.exception.BookingCantCancel;
+import com.jsp.onlinepharmacye2.exception.BoookingIdNotFoundException;
 import com.jsp.onlinepharmacye2.exception.CustomerIdNotFoundException;
 import com.jsp.onlinepharmacye2.exception.MedicineIdNotFoundException;
 import com.jsp.onlinepharmacye2.util.ResponseStructure;
@@ -83,6 +88,46 @@ public class BookingService {
 	    }else {
 	    	throw new CustomerIdNotFoundException("sorry faiiled to add bookings");
 	    }
+	}
+
+	public ResponseEntity<ResponseStructure<BookingDto>> cancelBooking(int bookingId) {
+		Bookings dbBookings=dao.findBooking(bookingId);
+		if(dbBookings!=null) {
+//			booking id is present
+//			cantcancelleddate:
+			
+			LocalDate cantCancelledDate=dbBookings.getExpectedDate().minusDays(2);
+//			now you want to check if it is cancelled::means dbBookings 
+//			please write this much ill take after 10 mins....
+			if(dbBookings.getBookingStatus().equals(BookingStatus.CANCELLED)) {
+				throw new BookingAlreadyCancelledException("Sorry failed to cancel the booking");
+			}else if(dbBookings.getBookingStatus().equals(BookingStatus.DELIVERED)) {
+				throw new BookingAlreadyDeliveredException("Sorry failed to cancel the booking");
+			}else if(LocalDate.now().equals(cantCancelledDate)||LocalDate.now().isAfter(cantCancelledDate)) {
+				throw new BookingCantCancel("Sorry failed to cancel the booking");
+			}else {
+				Bookings deletedBooking=dao.deleteBooking(bookingId);
+				ResponseStructure<BookingDto> structure=new ResponseStructure<>();
+	    		structure.setMessage("Booking deleted successfully");
+	    		
+	    		structure.setHttpStatus(HttpStatus.FORBIDDEN.value());
+	    		
+	    		BookingDto bookingDto=this.mapper.map(dbBookings, BookingDto.class);
+	            bookingDto.setMedicines(dbBookings.getMedicines());
+	    		bookingDto.setCustomerDto(this.mapper.map(dbBookings.getCustomer(), CustomerDto.class));
+	    		
+	    		
+	    		structure.setData(bookingDto);
+	    		
+	    		return new  ResponseEntity<ResponseStructure<BookingDto>>(structure,HttpStatus.CREATED);
+			}
+			
+			
+			
+		}else {
+//			booking id is not present
+			throw new BoookingIdNotFoundException("Sorry faiiled to cancel booking");
+		}
 	}
 	
 }

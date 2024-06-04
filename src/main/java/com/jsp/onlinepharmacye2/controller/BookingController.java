@@ -2,6 +2,7 @@ package com.jsp.onlinepharmacye2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,10 @@ public class BookingController {
 	public ResponseEntity<ResponseStructure<BookingDto>> addBooking(@RequestParam int customerId,
 			@RequestParam int medicineId,@RequestBody Bookings bookings){
 		return service.addBooking(customerId,medicineId,bookings);
+	}
+	@DeleteMapping
+	public ResponseEntity<ResponseStructure<BookingDto>> cancelBooking(@RequestParam int bookingId){
+		return service.cancelBooking(bookingId);
 	}
 	
 }
