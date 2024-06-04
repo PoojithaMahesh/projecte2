@@ -43,9 +43,10 @@ public class BookingService {
 	private ModelMapper mapper;
 	
 	public ResponseEntity<ResponseStructure<BookingDto>> addBooking(int customerId, int medicineId, Bookings bookings) {
-		
+		LocalDate expectedDate=LocalDate.now().plusDays(7);
 		Customer dbCustomer=customerDao.findCustomerById(customerId);
 	    if(dbCustomer!=null) {
+	    	bookings.setExpectedDate(expectedDate);
 	    	bookings.setBookingStatus(BookingStatus.ACTIVE);
 	    	bookings.setCustomer(dbCustomer);
 //	    	customer is having a bookings
